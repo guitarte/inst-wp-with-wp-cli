@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # Description:
 # WordPress installation script using wp-cli.
@@ -36,20 +36,20 @@
 # WEB_SERVER_PROCESS_NAME='httpd' 
 # MYSQL_PROCESS_NAME='mysqld'
 
-DOCUMENT_ROOT='/var/www' # Anyone knows how to get the document root by any shell command?
+DOCUMENT_ROOT='/Applications/MAMP/htdocs' # Anyone knows how to get the document root by any shell command?
 
-WP_LOCALE='ja'
+WP_LOCALE='us'
 
-DBUSER='root'
-DBPASSWORD='root'
+DBUSER='cg_dev_usr'
+DBPASSWORD='ipad'
 
-DOMAIN='localhost'
+DOMAIN='dev.testwpscript.com'
 
-WP_URL=''
-WP_TITLE=''
+WP_URL='dev.testwpscript.com'
+WP_TITLE='dev.testwpscript.com'
 WP_ADMIN_NAME='admin'
 WP_ADMIN_PASSWORD='admin'
-WP_ADMIN_EMAIL='admin@example.com'
+WP_ADMIN_EMAIL='guitarte@usc.edu'
 
 WP_ADDITIONAL_USER_NAME='test1'
 WP_ADDITIONAL_USER_PASSWORD='test1'
@@ -57,7 +57,7 @@ WP_ADDITIONAL_USER_EMAIL='test1@example.com'
 
 # Set some other default parameters.
 
-SELF_DIR=`dirname $0`
+SELF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 CURRENT_DATE=`date '+%Y%m%d'`
 CURRENT_TIME=`date '+%H%M%S'`
@@ -65,7 +65,7 @@ CURRENT_DATE_TIME="${CURRENT_DATE}_${CURRENT_TIME}"
 
 DBNAME="wp_test_${CURRENT_DATE_TIME}"
 
-WP_INSATALL_DIR="wp_${CURRENT_DATE_TIME}"
+WP_INSATALL_DIR="dev.testwpscript.com"
 WP_INSTALL_FULL_PATH="${DOCUMENT_ROOT}/${WP_INSATALL_DIR}"
 
 PLUGINS_LIST='plugins-list.txt'
@@ -158,7 +158,7 @@ fi
 
 if ["${WP_TITLE}" = '']
   then
-    WP_TITLE="wp_test_${CURRENT_DATE_TIME}"
+    WP_TITLE="${WP_URL}"
 fi
 
 wp core install \
