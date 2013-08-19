@@ -49,7 +49,7 @@ WP_URL='dev.testwpscript.com'
 WP_TITLE='dev.testwpscript.com'
 WP_ADMIN_NAME='admin'
 WP_ADMIN_PASSWORD='admin'
-WP_ADMIN_EMAIL='guitarte@usc.edu'
+WP_ADMIN_EMAIL='admin@example.com'
 
 WP_ADDITIONAL_USER_NAME='test1'
 WP_ADDITIONAL_USER_PASSWORD='test1'
