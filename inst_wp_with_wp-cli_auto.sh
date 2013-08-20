@@ -40,9 +40,6 @@ DOCUMENT_ROOT='/Applications/MAMP/htdocs' # Anyone knows how to get the document
 
 WP_LOCALE='us'
 
-DBUSER='cg_dev_usr'
-DBPASSWORD='ipad'
-
 DOMAIN='dev.testwpscript.com'
 
 WP_URL='dev.testwpscript.com'
@@ -63,7 +60,18 @@ CURRENT_DATE=`date '+%Y%m%d'`
 CURRENT_TIME=`date '+%H%M%S'`
 CURRENT_DATE_TIME="${CURRENT_DATE}_${CURRENT_TIME}"
 
-DBNAME="wp_test_${CURRENT_DATE_TIME}"
+# Set DB Username and DB Name - Change these
+DBUSER='wp_script_usr'
+DBNAME="wp_script_db"
+# Random DB Password
+DBPASSWORD=`cat /dev/urandom| LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 16| head -n 1`
+MYSQL=`which mysql`
+ 
+Q1="CREATE DATABASE IF NOT EXISTS ${DBNAME};"
+Q2="GRANT USAGE ON *.* TO ${DBUSER}@localhost IDENTIFIED BY '${DBPASSWORD}';"
+Q3="GRANT ALL PRIVILEGES ON ${DBNAME}.* TO ${DBUSER}@localhost;"
+Q4="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}${Q3}${Q4}"
 
 WP_INSATALL_DIR="dev.testwpscript.com"
 WP_INSTALL_FULL_PATH="${DOCUMENT_ROOT}/${WP_INSATALL_DIR}"
@@ -137,17 +145,20 @@ wp core download \
 
 cd ${WP_INSTALL_FULL_PATH}
 
+# Create a database and user
+# TODO: If it doesn't work, show the error message and exit
+# Use this first before the wp core config command if creating the db user first
+
+# Disable wp-cli's db create
+# wp db create
+$MYSQL -uroot -p`cat /etc/.mysqlpw` -e "$SQL"
+
 # Create wp-config.php.
 
 wp core config \
   --dbname=${DBNAME} \
   --dbuser=${DBUSER} \
   --dbpass=${DBPASSWORD}
-
-# Create a database.
-# TODO: If it doesn't work, show the error message and exit
-
-wp db create
 
 # Install WordPress
 
@@ -194,7 +205,7 @@ fi
 
 # while read USERS
 #  do
-    wp user create ${WP_ADDITIONAL_USER_NAME} ${WP_ADDITIONAL_USER_EMAIL} ${WP_ADDITIONAL_USER_PASSWORD}
+#    wp user create ${WP_ADDITIONAL_USER_NAME} ${WP_ADDITIONAL_USER_EMAIL} ${WP_ADDITIONAL_USER_PASSWORD}
 #  done <${WP_ADDITIONAL_USERS_LSIT}
 
 # TODO: Set the settings like the permalink structure and so on.
