@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Description:
 # WordPress installation script using wp-cli.
